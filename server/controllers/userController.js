@@ -6,7 +6,8 @@ const bcrypt = require("bcryptjs");
 exports.getUserProfile = async (req, res, next) => {
   try {
     // req.user is populated by your authMiddleware (it contains the userId)
-    const user = await User.findById(req.user).select("-password");
+    const user = await User.findById(req.user.userId).select("-password");
+
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
@@ -39,5 +40,15 @@ exports.updateUserProfile = async (req, res, next) => {
     res.status(200).json({ user });
   } catch (error) {
     next(error);
+  }
+};
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    // Only an admin can reach this method (due to adminOnly middleware)
+    const users = await User.find().select("-password"); // Exclude password field
+    return res.json(users);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
 };

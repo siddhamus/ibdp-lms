@@ -1,15 +1,22 @@
 // server/index.js
 require("dotenv").config();
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const morgan = require("morgan");
 
 const app = express();
+app.use(cookieParser());
 const PORT = process.env.PORT || 5000;
 
 // Enable CORS for all routes
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // your Next.js origin
+    credentials: true, // allow cookies
+  })
+);
 
 // Connect to MongoDB
 connectDB();

@@ -14,14 +14,7 @@ const Profile = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      // If not authenticated, redirect to login
-      router.push("/login");
-      return;
-    }
-
-    // Fetch the user profile from your backend
+    // Fetch the user profile using the cookie for authentication.
     const fetchProfile = async () => {
       try {
         const res = await fetch(
@@ -29,12 +22,19 @@ const Profile = () => {
             process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
           }/api/users/profile`,
           {
+            credentials: "include", // Send cookies with the request
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
             },
           }
         );
+
+        // If unauthorized, redirect to login
+        if (res.status === 401) {
+          router.push("/login");
+          return;
+        }
+
         const data = await res.json();
         if (!res.ok) {
           setError(data.message || "Failed to load profile.");

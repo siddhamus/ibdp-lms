@@ -18,19 +18,53 @@ const Header: React.FC<HeaderProps> = ({ title, navigation }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
-  // Check for token presence when component mounts.
+  // Check authentication status by calling the profile endpoint.
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token);
+    const checkAuth = async () => {
+      try {
+        const res = await fetch(
+          `${
+            process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+          }/api/users/profile`,
+          {
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        if (res.ok) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (err) {
+        setIsAuthenticated(false);
+      }
+    };
+    checkAuth();
   }, []);
 
   const isActive = (path: string) => router.pathname === path;
 
-  const handleLogout = () => {
-    // Remove the token and update auth state.
-    localStorage.removeItem("token");
-    setIsAuthenticated(false);
-    router.push("/login");
+  const handleLogout = async () => {
+    try {
+      const res = await fetch(
+        `${
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+        }/api/auth/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+      if (res.ok) {
+        setIsAuthenticated(false);
+        router.push("/login");
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   return (

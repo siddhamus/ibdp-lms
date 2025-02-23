@@ -1,70 +1,104 @@
 // server/controllers/authController.js
-const { validationResult } = require('express-validator');
-const User = require('../models/User');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const User = require("../models/User");
 
-// Register Controller
-exports.register = async (req, res, next) => {
-  // Validate incoming data from express-validator
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+// Helper to generate JWT
+function generateToken(user) {
+  return jwt.sign(
+    {
+      userId: user._id,
+      role: user.role || "user",
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+}
+
+exports.register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Check if user already exists
-    let user = await User.findOne({ email });
-    if (user) {
-      return res.status(400).json({ message: 'User already exists.' });
-    }
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      role: role || "user",
+    });
+    await newUser.save();
 
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const token = generateToken(newUser);
 
-    // Create new user
-    user = new User({ name, email, password: hashedPassword });
-    await user.save();
+    // Set JWT as an HTTP-only cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Set to true in production
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+      path: "/",
+    });
 
-    // Generate JWT token
-    const payload = { userId: user._id };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.status(201).json({ token });
-  } catch (error) {
-    next(error);
+    return res.status(201).json({
+      message: "User registered successfully",
+      user: {
+        id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+      },
+    });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
 };
 
-// Login Controller
-exports.login = async (req, res, next) => {
-  // Validate incoming data
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials.' });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials.' });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Generate JWT token
-    const payload = { userId: user._id };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
-  } catch (error) {
-    next(error);
+    const token = generateToken(user);
+
+    // Set JWT as an HTTP-only cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // only use HTTPS in production
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+      path: "/",
+    });
+
+    // Instead of redirecting from the server, return a JSON object with a redirect URL.
+    const redirectUrl = user.role === "admin" ? "/admin/" : "/";
+    console.log("Redirect URL: ", redirectUrl); // Debug log
+    return res.json({
+      message: "Login successful",
+      redirectUrl,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
 };
 
-
-
+exports.logout = async (req, res) => {
+  // Clear the token cookie by specifying the same path used when setting the cookie
+  res.clearCookie("token", { path: "/" });
+  return res.json({ message: "Logged out successfully" });
+};

@@ -24,13 +24,16 @@ export default function Login() {
         }/api/auth/login`,
         {
           method: "POST",
+          credentials: "include", // ensure cookies are sent with the request
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         }
       );
       const data = await res.json();
+      console.log("Response data:", data); // Debug log
 
       if (!res.ok) {
+        // (handle errors as before)
         const errorMessage = data.message?.toLowerCase() || "";
         if (errorMessage.includes("not found")) {
           setError("User not found. Please check your email and try again.");
@@ -45,8 +48,9 @@ export default function Login() {
           setError(data.message || "An error occurred. Please try again.");
         }
       } else {
-        localStorage.setItem("token", data.token);
-        router.push("/");
+        // Optionally, you can remove localStorage token saving if you rely on cookies.
+        // localStorage.setItem("token", data.token);
+        router.push(data.redirectUrl);
       }
     } catch (_err) {
       setError("Network error. Please try again.");

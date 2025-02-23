@@ -28,6 +28,7 @@ const Register = () => {
         }/api/auth/register`,
         {
           method: "POST",
+          credentials: "include", // ensure cookies are sent/received
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         }
@@ -50,8 +51,9 @@ const Register = () => {
           setError(data.message || "An error occurred. Please try again.");
         }
       } else {
-        // Save token (if desired) and redirect to homepage
-        localStorage.setItem("token", data.token);
+        // Registration successful.
+        // The token is already set in an HTTP-only cookie by the server.
+        // Redirect the user to the homepage (or a different page as desired).
         router.push("/");
       }
     } catch (err: unknown) {
