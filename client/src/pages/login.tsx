@@ -46,7 +46,7 @@ export default function Login() {
         localStorage.setItem("token", data.token);
         router.push("/");
       }
-    } catch (err) {
+    } catch (_err) {
       setError("Network error. Please try again.");
     }
     setLoading(false);

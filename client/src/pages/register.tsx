@@ -20,6 +20,7 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
+
     try {
       const res = await fetch(
         `${
@@ -35,7 +36,7 @@ const Register = () => {
       let data;
       try {
         data = await res.json();
-      } catch (jsonError) {
+      } catch {
         throw new Error("Invalid response from server.");
       }
 
@@ -53,10 +54,15 @@ const Register = () => {
         localStorage.setItem("token", data.token);
         router.push("/");
       }
-    } catch (err: any) {
-      setError(err.message || "Network error. Please try again.");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || "Network error. Please try again.");
+      } else {
+        setError("Network error. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

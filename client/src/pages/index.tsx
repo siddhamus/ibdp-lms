@@ -1,13 +1,13 @@
 import type { NextPage } from "next";
 
-import { useTheme } from "../context/ThemeContext";
+// import { useTheme } from "../context/ThemeContext";
 import Link from "next/link";
 import {
   Book,
   Users,
   Award,
   Clock,
-  Play,
+  // Play,
   ChevronRight,
   Star,
   Search,
@@ -51,7 +51,7 @@ const featuredCourses = [
 ];
 
 const Home: NextPage = () => {
-  const { theme, toggleTheme } = useTheme();
+  // const { theme, toggleTheme } = useTheme();
   const [searchQuery, setSearchQuery] = useState("");
 
   return (

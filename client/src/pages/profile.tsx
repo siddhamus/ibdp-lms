@@ -41,7 +41,7 @@ const Profile = () => {
         } else {
           setProfile(data.user);
         }
-      } catch (err) {
+      } catch (_err) {
         setError("Network error. Please try again.");
       }
     };
