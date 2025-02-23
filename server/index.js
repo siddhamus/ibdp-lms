@@ -32,6 +32,7 @@ app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 
 // Other routes can be added similarly
+app.use("/api/courses", require("./routes/courseRoutes"));
 
 // Error Handling Middleware (should be after routes)
 const errorMiddleware = require("./middleware/errorMiddleware");
