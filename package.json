@@ -5,9 +5,12 @@
     "dev": "concurrently \"npm run client\" \"npm run server\""
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.0",
     "@shadcn/ui": "^0.0.4",
     "@tiptap/react": "^2.11.5",
     "chart.js": "^4.4.8",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.4.7",
     "react-beautiful-dnd": "^13.1.1",
     "react-hook-form": "^7.54.2",
     "react-pdf": "^9.2.1",
