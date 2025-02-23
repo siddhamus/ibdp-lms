@@ -30,7 +30,7 @@ const Courses = () => {
         } else {
           setCourses(data.data);
         }
-      } catch (_err) {
+      } catch (err) {
         setError("Network error. Please try again.");
       }
     };
