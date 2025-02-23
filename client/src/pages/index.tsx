@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import MainLayout from "../layouts/MainLayout";
+
 import { useTheme } from "../context/ThemeContext";
 import Link from "next/link";
 import {
@@ -25,7 +25,7 @@ const featuredCourses = [
     duration: "12 weeks",
     rating: 4.8,
     students: 234,
-    image: "/api/placeholder/400/250",
+    image: "https://placehold.co/800?text=Hello+World&font=roboto",
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ const featuredCourses = [
     duration: "10 weeks",
     rating: 4.7,
     students: 189,
-    image: "/api/placeholder/400/250",
+    image: "https://placehold.co/800?text=Hello+World&font=roboto",
   },
   {
     id: 3,
@@ -46,7 +46,7 @@ const featuredCourses = [
     duration: "8 weeks",
     rating: 4.9,
     students: 156,
-    image: "/api/placeholder/400/250",
+    image: "https://placehold.co/800?text=Hello+World&font=roboto",
   },
 ];
 
@@ -55,7 +55,7 @@ const Home: NextPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <MainLayout title="Home">
+    <>
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-indigo-600 to-blue-500 text-white py-20">
         <div className="container mx-auto px-6">
@@ -70,7 +70,7 @@ const Home: NextPage = () => {
                 journey.
               </p>
               <div className="flex space-x-4">
-                <Link href="/signup">
+                <Link href="/register">
                   <span className="inline-block px-8 py-4 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-indigo-50 transition duration-300">
                     Get Started Free
                   </span>
@@ -249,14 +249,14 @@ const Home: NextPage = () => {
             Join thousands of students who have achieved excellence in IB
             English Language & Literature through our platform.
           </p>
-          <Link href="/signup">
+          <Link href="/register">
             <span className="inline-block px-8 py-4 bg-white text-indigo-600 rounded-lg font-semibold hover:bg-indigo-50 transition duration-300">
               Start Learning Today
             </span>
           </Link>
         </div>
       </section>
-    </MainLayout>
+    </>
   );
 };
 
