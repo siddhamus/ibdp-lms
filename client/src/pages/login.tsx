@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -52,7 +53,7 @@ export default function Login() {
         // localStorage.setItem("token", data.token);
         router.push(data.redirectUrl);
       }
-    } catch (_err) {
+    } catch {
       setError("Network error. Please try again.");
     } finally {
       setLoading(false);
@@ -64,9 +65,11 @@ export default function Login() {
       <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
-            <img
+            <Image
               alt="Your Company"
-              src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+              src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=cyan&shade=600"
+              width={40}
+              height={40}
               className="h-10 w-auto"
             />
             <h2 className="mt-8 text-2xl font-bold tracking-tight text-gray-900">
@@ -76,7 +79,7 @@ export default function Login() {
               Not a member?{" "}
               <Link
                 href="/register"
-                className="font-semibold text-indigo-600 hover:text-indigo-500"
+                className="font-semibold text-cyan-600 hover:text-cyan-500"
               >
                 Register
               </Link>
@@ -106,7 +109,7 @@ export default function Login() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:outline-indigo-600 sm:text-sm"
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:outline-cyan-600 sm:text-sm"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -128,7 +131,7 @@ export default function Login() {
                     required
                     value={formData.password}
                     onChange={handleChange}
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:outline-indigo-600 sm:text-sm"
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:outline-cyan-600 sm:text-sm"
                     placeholder="Your Password"
                   />
                 </div>
@@ -140,7 +143,7 @@ export default function Login() {
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                    className="h-4 w-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-600"
                   />
                   <label
                     htmlFor="remember-me"
@@ -153,7 +156,7 @@ export default function Login() {
                 <div className="text-sm">
                   <a
                     href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    className="font-semibold text-cyan-600 hover:text-cyan-500"
                   >
                     Forgot password?
                   </a>
@@ -164,7 +167,7 @@ export default function Login() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="flex w-full justify-center rounded-md bg-cyan-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
                 >
                   {loading ? "Signing in..." : "Sign in"}
                 </button>
@@ -240,10 +243,12 @@ export default function Login() {
         </div>
       </div>
       <div className="relative hidden w-0 flex-1 lg:block">
-        <img
+        <Image
           alt="Background Image"
           src="https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1908&q=80"
-          className="absolute inset-0 h-full w-full object-cover"
+          fill
+          priority
+          className="object-cover"
         />
       </div>
     </div>

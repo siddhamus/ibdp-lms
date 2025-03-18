@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Course {
   _id: string;
@@ -30,7 +31,7 @@ const Courses = () => {
         } else {
           setCourses(data.data);
         }
-      } catch (err) {
+      } catch {
         setError("Network error. Please try again.");
       }
     };
@@ -45,17 +46,21 @@ const Courses = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {courses.map((course) => (
           <div key={course._id} className="bg-white rounded-lg shadow p-4">
-            <img
-              src={course.image}
-              alt={course.title}
-              className="w-full h-40 object-cover rounded-md mb-4"
-            />
+            <div className="relative w-full h-40 mb-4">
+              <Image
+                src={course.image}
+                alt={course.title}
+                className="rounded-md object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
             <h2 className="text-xl font-semibold">{course.title}</h2>
             <p className="text-gray-600">{course.description}</p>
             <div className="mt-4">
               <Link
                 href={`/courses/${course._id}`}
-                className="text-indigo-600 hover:underline"
+                className="text-cyan-600 hover:underline"
               >
                 View Course Details
               </Link>

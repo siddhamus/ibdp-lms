@@ -19,7 +19,7 @@ const AdminNavbar: React.FC<AdminNavbarProps> = ({ pageTitle }) => {
       </div>
       <div className="flex items-center space-x-4">
         {/* Notification Button */}
-        <button className="p-2 rounded-md text-gray-600 hover:text-indigo-600 hover:bg-gray-100">
+        <button className="p-2 rounded-md text-gray-600 hover:text-cyan-600 hover:bg-gray-100">
           <BellIcon className="h-6 w-6" />
         </button>
         {/* Profile Dropdown */}
@@ -45,7 +45,7 @@ const AdminNavbar: React.FC<AdminNavbarProps> = ({ pageTitle }) => {
                   <Link
                     href="/admin/profile"
                     className={`block px-4 py-2 text-sm ${
-                      active ? "bg-indigo-600 text-white" : "text-gray-700"
+                      active ? "bg-cyan-600 text-white" : "text-gray-700"
                     }`}
                   >
                     Profile
@@ -56,7 +56,7 @@ const AdminNavbar: React.FC<AdminNavbarProps> = ({ pageTitle }) => {
                 {({ active }) => (
                   <div
                     className={`block text-left ${
-                      active ? "bg-indigo-600 text-white" : "text-gray-700"
+                      active ? "bg-cyan-600 text-white" : "text-gray-700"
                     }`}
                   >
                     <LogoutButton className="w-full text-left p-2" />

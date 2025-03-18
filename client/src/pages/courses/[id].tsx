@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 interface Course {
   _id: string;
@@ -34,7 +35,7 @@ const CourseDetail = () => {
         } else {
           setCourse(data.data);
         }
-      } catch (err) {
+      } catch {
         setError("Network error. Please try again.");
       }
     };
@@ -60,15 +61,20 @@ const CourseDetail = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <img
-        src={course.image}
-        alt={course.title}
-        className="w-full h-64 object-cover rounded-md mb-4"
-      />
+      <div className="relative w-full h-64 mb-4">
+        <Image
+          src={course.image}
+          alt={course.title}
+          className="rounded-md object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
+        />
+      </div>
       <h1 className="text-3xl font-bold mb-2">{course.title}</h1>
       <p className="text-gray-700 mb-4">{course.description}</p>
       <div className="flex space-x-4">
-        <span className="text-indigo-600 font-semibold">{course.level}</span>
+        <span className="text-cyan-600 font-semibold">{course.level}</span>
         <span className="text-gray-600">{course.duration}</span>
       </div>
       {/* Further details like syllabus or assignments can be added here */}

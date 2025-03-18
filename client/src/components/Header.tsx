@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({ title, navigation }) => {
         } else {
           setIsAuthenticated(false);
         }
-      } catch (err) {
+      } catch {
         setIsAuthenticated(false);
       }
     };
@@ -74,12 +74,12 @@ const Header: React.FC<HeaderProps> = ({ title, navigation }) => {
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-extrabold text-indigo-600">
+              <span className="text-2xl font-extrabold text-cyan-600">
                 {title}
               </span>
-              <span className="hidden md:block text-sm text-gray-500">
+              {/* <span className="hidden md:block text-sm text-gray-500">
                 IBMantra
-              </span>
+              </span> */}
             </Link>
           </div>
           {/* Desktop Navigation */}
@@ -90,7 +90,7 @@ const Header: React.FC<HeaderProps> = ({ title, navigation }) => {
                 href={item.href}
                 className={`inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 ${
                   isActive(item.href)
-                    ? "border-indigo-500 text-gray-900"
+                    ? "border-cyan-500 text-gray-900"
                     : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
                 }`}
               >
@@ -108,12 +108,12 @@ const Header: React.FC<HeaderProps> = ({ title, navigation }) => {
               ) : (
                 <>
                   <Link href="/login">
-                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button className="bg-cyan-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
                       Sign In
                     </button>
                   </Link>
                   <Link href="/register">
-                    <button className="bg-white border border-indigo-600 text-indigo-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button className="bg-white border border-cyan-600 text-cyan-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-cyan-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
                       Register
                     </button>
                   </Link>
@@ -125,7 +125,7 @@ const Header: React.FC<HeaderProps> = ({ title, navigation }) => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500"
             >
               {isMobileMenuOpen ? (
                 <X className="block h-6 w-6" />
@@ -147,7 +147,7 @@ const Header: React.FC<HeaderProps> = ({ title, navigation }) => {
                 href={item.href}
                 className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
                   isActive(item.href)
-                    ? "bg-indigo-50 border-indigo-500 text-indigo-700"
+                    ? "bg-cyan-50 border-cyan-500 text-cyan-700"
                     : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
                 }`}
               >
@@ -165,12 +165,12 @@ const Header: React.FC<HeaderProps> = ({ title, navigation }) => {
               ) : (
                 <>
                   <Link href="/login">
-                    <button className="w-full bg-indigo-600 text-white px-4 py-2 rounded-md text-base font-medium hover:bg-indigo-700">
+                    <button className="w-full bg-cyan-600 text-white px-4 py-2 rounded-md text-base font-medium hover:bg-cyan-700">
                       Sign In
                     </button>
                   </Link>
                   <Link href="/register">
-                    <button className="w-full bg-white border border-indigo-600 text-indigo-600 px-4 py-2 rounded-md text-base font-medium hover:bg-indigo-50">
+                    <button className="w-full bg-white border border-cyan-600 text-cyan-600 px-4 py-2 rounded-md text-base font-medium hover:bg-cyan-50">
                       Register
                     </button>
                   </Link>

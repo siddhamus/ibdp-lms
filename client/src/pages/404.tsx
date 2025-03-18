@@ -10,7 +10,7 @@ const NotFoundPage: React.FC = () => {
         Oops! The page you are looking for does not exist.
       </p>
       <Link href="/" passHref>
-        <span className="mt-6 cursor-pointer px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-500 transition">
+        <span className="mt-6 cursor-pointer px-4 py-2 bg-cyan-600 text-white rounded hover:bg-cyan-500 transition">
           Go to Home
         </span>
       </Link>

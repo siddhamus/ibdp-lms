@@ -33,7 +33,7 @@ export function withAdminAuth<P extends object>(
           } else {
             router.push("/403"); // or any forbidden page
           }
-        } catch (err) {
+        } catch {
           router.push("/login");
         }
       };

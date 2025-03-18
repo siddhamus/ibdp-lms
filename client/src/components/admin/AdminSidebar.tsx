@@ -54,7 +54,7 @@ const AdminSidebar: React.FC = () => {
       >
         <div className="flex items-center justify-center h-16 shadow-sm">
           <Link href="/admin">
-            <span className="text-xl font-bold text-indigo-600 cursor-pointer">
+            <span className="text-xl font-bold text-cyan-600 cursor-pointer">
               Admin Panel
             </span>
           </Link>
